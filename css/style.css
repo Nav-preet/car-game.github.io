@@ -1,0 +1,33 @@
+*,*::after,*::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,body{
+    height: 100%;
+}
+.main{
+    float: left;
+    width: 100%;
+}
+.hide{
+    display: none;
+}
+.show{
+    display: block;
+}
+.gameArea{
+    width: 400px;
+    margin:0 auto;
+    height: 100vh;
+    background-color: black;
+    position: relative;
+}
+.car{
+    width: 50px;
+    height: 70px;
+    background-color: red;
+    position: absolute;
+    top: 100px;
+    left: 100px;
+}
