@@ -1,4 +1,5 @@
-const text = document.querySelector(".text");
+const text = document.querySelector(".startScreen");
+const score = document.querySelector(".score");
 const gameArea = document.querySelector(".gameArea");
 let player = { speed: 3 , score : 0 }
 let keys = { ArrowUp : false, ArrowDown : false, ArrowLeft : false, ArrowRight : false }
@@ -27,8 +28,8 @@ function hexColor(){
 }
 
 function start(){
-    gameArea.classList.add("show");
-    gameArea.classList.remove("hide");
+    text.classList.add("hide");
+    gameArea.innerHTML="";
     let car = document.createElement('div');
     car.setAttribute('class','car');
     gameArea.appendChild(car);
@@ -48,7 +49,7 @@ function start(){
         roadCars.setAttribute('class' , 'enemyCars');
         roadCars.y = ((x+1)*350)*-1;
         roadCars.style.top = roadCars.y + 'px';
-        roadCars.style.background = hexColor();
+        roadCars.style.backgroundColor= hexColor();
         roadCars.style.left = Math.floor(Math.random() * 350) + "px";
         gameArea.appendChild(roadCars);
     } 
@@ -80,7 +81,8 @@ function moveLines(){
 } 
 function endGame() {
     player.start = false;
-    console.log('hit');
+    text.classList.remove("hide");
+    text.innerHTML = "Game Over<br/> Your final score is " + player.score + "<br/> Press here to restart the game";
 }
 function moveCars(car){
     let eCars = document.querySelectorAll('.enemyCars');
@@ -115,7 +117,7 @@ function gamePlay(){
          car.style.top = player.x + "px";
          car.style.left = player.y + "px"; 
          player.score++;
-        text.innerHTML = player.score ; 
+        score.innerHTML = "Score : " + player.score ; 
         window.requestAnimationFrame(gamePlay);      
     }
 
