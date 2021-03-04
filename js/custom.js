@@ -1,6 +1,6 @@
 const text = document.querySelector(".text");
 const gameArea = document.querySelector(".gameArea");
-let player = { speed: 3 }
+let player = { speed: 3 , score : 0 }
 let keys = { ArrowUp : false, ArrowDown : false, ArrowLeft : false, ArrowRight : false }
 text.addEventListener('click',start);
 
@@ -11,18 +11,20 @@ text.addEventListener('click',start);
 function keyDown(e){
     e.preventDefault();
     keys[e.key] = true;
-    console.log(e.key);
-    console.log(keys);
 }
 
 function keyUp(e){
     e.preventDefault();
     keys[e.key] = false;
-    console.log(e.key);
-    console.log(keys);
 }
 
-
+function hexColor(){
+    function c1(){
+        let hex = Math.floor(Math.random()*256).toString(16);
+        return ("0"+ String(hex)).substr(-2);
+    }
+    return "#" + c1() + c1() + c1();
+}
 
 function start(){
     gameArea.classList.add("show");
@@ -46,7 +48,7 @@ function start(){
         roadCars.setAttribute('class' , 'enemyCars');
         roadCars.y = ((x+1)*350)*-1;
         roadCars.style.top = roadCars.y + 'px';
-        roadCars.style.background = 'blue';
+        roadCars.style.background = hexColor();
         roadCars.style.left = Math.floor(Math.random() * 350) + "px";
         gameArea.appendChild(roadCars);
     } 
@@ -76,13 +78,16 @@ function moveLines(){
         item.style.top = item.y + 'px';
     });
 } 
-
+function endGame() {
+    player.start = false;
+    console.log('hit');
+}
 function moveCars(car){
     let eCars = document.querySelectorAll('.enemyCars');
     
     eCars.forEach(function(item) {
          if(isCollide(car, item)){
-            console.log('hit');
+            endGame();
         }
         if(item.y >= 750){
             item.y = -300;
@@ -98,21 +103,23 @@ function gamePlay(){
     let eCars = document.querySelector('.enemyCars');
     let road = gameArea.getBoundingClientRect();
     
-    moveLines();
-    moveCars(car);
-
     
-
     if(player.start){
+        moveLines();
+        moveCars(car);
+
         if(keys.ArrowUp && player.x > (road.top + 50)) { player.x -= player.speed ; }
         if(keys.ArrowDown && player.x < (road.bottom - 70)){ player.x += player.speed ; }
         if(keys.ArrowLeft && player.y > 0){ player.y -= player.speed ; }
         if(keys.ArrowRight && player.y < (road.width - 50)){ player.y += player.speed ; }
          car.style.top = player.x + "px";
-         car.style.left = player.y + "px";        
+         car.style.left = player.y + "px"; 
+         player.score++;
+        text.innerHTML = player.score ; 
+        window.requestAnimationFrame(gamePlay);      
     }
 
     
-    window.requestAnimationFrame(gamePlay);
+    
 }
 
