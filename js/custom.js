@@ -117,7 +117,8 @@ function gamePlay(){
          car.style.top = player.x + "px";
          car.style.left = player.y + "px"; 
          player.score++;
-        score.innerHTML = "Score : " + player.score ; 
+         let ps = player.score - 1;
+        score.innerHTML = "Score : " + ps ; 
         window.requestAnimationFrame(gamePlay);      
     }
 
